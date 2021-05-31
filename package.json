@@ -1,0 +1,44 @@
+{
+  "name": "tasteless",
+  "version": "1.0.0",
+  "description": "Tasteless is an upcoming social media platform",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "api": "API=true nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adixmr/tasteless.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adixmr/tasteless/issues"
+  },
+  "homepage": "https://github.com/adixmr/tasteless#readme",
+  "dependencies": {
+    "async": "^3.2.0",
+    "body-parser": "^1.19.0",
+    "clipboard": "^2.0.6",
+    "cookie-parser": "^1.4.5",
+    "crypto": "^1.0.1",
+    "csurf": "^1.11.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "fuse.js": "^6.4.6",
+    "helmet": "^4.4.1",
+    "http": "0.0.1-security",
+    "joi": "^17.3.0",
+    "loadash": "^1.0.0",
+    "mongoose": "^5.11.11",
+    "multer": "^1.4.2",
+    "nanoid": "^3.1.20",
+    "nodemon": "^2.0.7",
+    "path": "^0.12.7",
+    "timeago.js": "^4.0.2"
+  }
+}
