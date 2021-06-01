@@ -1,0 +1,78 @@
+<header>
+    <div class="container">
+        <div class="header-data">
+            <div style="width: 150px;" class="logo">
+                <a href="/" title=""><img src="/images/150x35.png" height="35px" width="150px" alt=""></a>
+            </div><!--logo end-->
+            <div class="search-bar">
+                <form>
+                    <input type="text" name="search" placeholder="Search...">
+                    <button type="submit"><i class="la la-search"></i></button>
+                </form>
+            </div><!--search-bar end-->
+            <nav class="navCollapse">
+                <ul>
+                    <li>
+                        <a href="/" title="">
+                            <span><i class="fas fa-home"></i></span>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/jokes" title="">
+                            <span><i class="fas fa-smile-wink"></i></span>
+                            Jokes
+                        </a> 
+                    </li>
+                    <li>
+                        <a href="/memes" title="">
+                            <span><i class="fas fa-laugh-squint"></i></span>
+                            Memes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/leaderboard" title="">
+                            <span><i class="fas fa-users"></i></span>
+                            Leaderboard
+                        </a> 
+                    </li>
+                    <li>
+                        <a href="/profile" title="">
+                            <span><i class="fas fa-user-circle"></i></span>
+                            My Profile
+                        </a>
+                    </li>  
+                </ul>
+            </nav><!--nav end-->
+            <div class="menu-btn">
+                <a href="#" title=""><i class="fa fa-bars"></i></a>
+            </div><!--menu-btn end-->
+            <div style="width: 130px;" class="user-account text-center">
+                <% if(session.username) {%>
+                <div class="user-info d-flex">
+                    <img src="/images/resources/user.png" alt="">
+                    <a href="#" title=""><%= ucfirst(session.username) %> </a>
+                    <i class="la la-sort-down"></i>
+                </div>
+                <div class="user-account-settingss" id="users">
+                      <!--search_form end-->
+                    <h3>Setting</h3>
+                    <ul class="us-links">
+                        <%- session.userdetails.isadmin ? '<li><a href="/manage" title="">Manage</a></li>' : '' %>
+                        <li><a href="/settings" title="">Account Setting</a></li>
+                        <li><a href="/privacy" title="">Privacy</a></li>
+                        <!-- <li><a href="/faqs" title="">Faqs</a></li> -->
+                        <li><a href="/terms" title="">Terms & Conditions</a></li>
+                    </ul>
+                    <h3 class="tc"><a href="/logout" title="">Logout</a></h3>
+                </div>
+                <% } else { %>
+                <div class="user-info">
+                    <a style="font-weight: bold; width: 100%;" href="/login">Login/Signup</a>
+                </div>
+                <% } %>
+                <!--user-account-settingss end-->
+            </div>
+        </div><!--header-data end-->
+    </div>
+</header>

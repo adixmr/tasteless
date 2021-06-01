@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title><%= projectName %></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<link rel="stylesheet" type="text/css" href="css/animate.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/line-awesome.css">
+	<link rel="stylesheet" type="text/css" href="css/line-awesome-font-awesome.min.css">
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.min.css">
+	<link rel="stylesheet" type="text/css" href="lib/slick/slick.css">
+	<link rel="stylesheet" type="text/css" href="lib/slick/slick-theme.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/responsive.css">
+
+	<style>
+		/* SHAREBUTTONS ========================= */
+		
+		.sharebuttons a { color: #fff !important; }
+		.btn-facebook { background: #3b5998;}
+		.btn-twitter { background: #00acee;}
+		.btn-google { background: #dd4b39;}
+		.btn-pinterest { background: #c8232c;}
+		.btn-linkedin { background: #0e76a8;}
+		.btn-facebook:hover { background: #2f4679;}
+		.btn-twitter:hover { background: #0089bd;}
+		.btn-google:hover { background: #b03b2d;}
+		.btn-pinterest:hover { background: #9f1b23;}
+		.btn-linkedin:hover { background: #0b5e85;}
+		
+		/* ====================== end SHAREBUTTONS */
+		
+		</style>
+</head>
+
+<body>	
+
+	<div class="wrapper">	
+		
+		<%- include('header.ejs') %>
+
+		<main>
+			<div class="main-section">
+				<div class="container">
+					<div class="main-section-data">
+						<div class="row">
+							
+							<div class="col-lg-8 col-md-8 no-pd">
+								<div class="main-ws-sec leaderboard-tab">
+								
+                                    <div class="widget widget-user p-2">
+                                        <h3 class="title-wd">Top Users</h3>
+										<div class="table-responsive">
+                                        <table class="table  table-hover">
+                                          <thead>
+                                            <tr>
+                                              <th scope="col">Rank</th>
+                                              <th scope="col">Username</th>
+                                              <th scope="col">Total Points</th>
+                                              <th scope="col">Total Memes</th>
+                                              <th scope="col">Total Jokes</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <% let i=1; users.forEach((user) => { %>
+                                            <tr>
+                                                <td><%= i++ %></td>
+                                                <td><a href="/user/<%= user.username %>"><span style="font-style: italic;"><%= user.username %></span></a></td>
+                                                <td><%= user.points.total %></td>
+                                                <td><%= user.posts.memes %></td>
+                                                <td><%= user.posts.jokes %></td>
+                                            </tr>
+                                            <% }) %>
+                                            
+                                          </tbody>
+                                        </table>
+									</div>
+                                        </div>
+ 
+								</div><!--main-ws-sec end-->
+							</div>
+							<div class="col-lg-4 pd-right-none no-pd">
+								<div class="right-sidebar">
+									<!--widget-about end-->
+									<div class="widget widget-jobs">
+										<div class="sd-title">
+											<h3>Trending Jokes</h3>
+										</div>
+										<div class="jobs-list">
+											<% trendingJokes.forEach((joke) => {%>
+											<div class="job-info d-flex">
+												<div style="width: 65%;" class="job-details pr-2">
+													<h3><%= ucfirst(joke.user) %></h3>
+													<p><%= joke.body.length>60 ? joke.body.slice(0,60)+'... ' : joke.body %></p>
+												</div>
+												<div style="width: 35%" class="hr-rate mt-0">
+													<span><%= format(joke.date) %></span>
+													<a href="/jokes/<%= joke.nanoid %>">View <i class="fas fa-arrow-right" style="font-weight: 600; font-size: 12px;"></i></a>
+												</div>
+											</div>
+											<% }) %><!--job-info end-->  
+										</div><!--jobs-list end-->
+									</div><!--widget-jobs end--> 
+									<div class="widget widget-about">
+										<img src="images/wd-logo.png" alt="">
+										<h3>Advertisement</h3>
+										<span>Some sponsored ad</span>
+										<div class="sign_link">
+											<h3><a href="sign-in.html" title="">Sign up</a></h3>
+											<a href="#" title="">Learn More</a>
+										</div>
+									</div><!--widget-jobs end-->
+									<div class="widget widget-jobs">
+										<div class="sd-title">
+											<h3>Trending Memes</h3>
+										</div>
+										<div class="jobs-list">
+											<% trendingMemes.forEach((meme) => {%>
+												<div class="job-info d-flex">
+													<div style="width: 65%;" class="job-details">
+														<h3><%= ucfirst(meme.user) %></h3>
+													<p class=" d-flex flex-column"><%= meme.title %>
+														<a href="/memes/<%= meme.nanoid %>">
+														<img src="/uploads/<%= meme.img %>" height="100px"></img>
+													</a></p>
+												</div>
+												<div style="width: 35%" class="hr-rate mt-0">
+													<span><%= format(meme.date) %></span>
+													<a href="/memes/<%= meme.nanoid %>">View <i class="fas fa-arrow-right" style="font-weight: 600; font-size: 12px;"></i></a>
+												</div>
+											</div>
+											<% }) %><!--job-info end-->  
+										</div><!--jobs-list end-->
+									</div>
+								</div><!--right-sidebar end-->
+							</div>
+						</div>
+					</div><!-- main-section-data end-->
+				</div> 
+			</div>
+		</main>
+	
+		
+
+ 
+	</div><!--theme-layout end-->
+
+
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/popper.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.mCustomScrollbar.js"></script>
+<script type="text/javascript" src="lib/slick/slick.min.js"></script>
+<script type="text/javascript" src="js/scrollbar.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+
+</body>
+</html>

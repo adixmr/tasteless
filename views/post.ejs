@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+	<title><%= locals.projectName %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.range.css">
+    <link rel="stylesheet" type="text/css" href="/css/line-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/css/line-awesome-font-awesome.min.css">
+	<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="/lib/slick/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+
+    <style>
+		/* SHAREBUTTONS ========================= */
+		
+		.sharebuttons a { color: #fff !important; }
+		.btn-facebook { background: #3b5998;}
+		.btn-twitter { background: #00acee;}
+		.btn-google { background: #dd4b39;}
+		.btn-pinterest { background: #c8232c;}
+		.btn-linkedin { background: #0e76a8;}
+		.btn-facebook:hover { background: #2f4679;}
+		.btn-twitter:hover { background: #0089bd;}
+		.btn-google:hover { background: #b03b2d;}
+		.btn-pinterest:hover { background: #9f1b23;}
+		.btn-linkedin:hover { background: #0b5e85;}
+		
+		/* ====================== end SHAREBUTTONS */
+		
+		</style>
+</head>
+
+<body>
+<div class="modal" id="mymodal">
+        <div class="modal-dialog">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="text-light text-center">Apply a Job</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="innerbody apply-jobbox">
+                        <h3>Attach File With CV</h3>
+                        <form>
+                            <input type="text" placeholder="Full Name"><br>
+                            <input type="email" placeholder="Email Address">
+                        </form>
+                        <div class="select-files">
+                            <input type="file" class="custom-file-input">
+                            <p>Upload your cv / resume file. Max file size : 3MB</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="place-bid-btn">Apply a Job</button>
+                    <button>Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+       
+        <%- include('header.ejs') %>
+
+        <!--header end-->
+        <main>
+            <div class="main-section">
+                <div class="container">
+                    <div class="main-section-data">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 no-pd">
+                                <div class="main-ws-sec">
+                                    <div class="posts-section">
+                                        <div class="post-bar">
+                                            <div style="width: 100%;
+                                            float: left;">
+                                            <div class="post_topbar row" id="post-section">
+                                                <div class="usy-dt col-11 pr-0">
+                                                    <div style="margin-left: 0;" class="usy-name">
+                                                        <h3><a href="/user/<%= post.user %>"><%= post.user %></a></h3>
+                                                    </div>
+                                                </div>
+                                                <div class="ed-opts col-1 p-0">
+                                                    <a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v" style="padding-right: 15px;"></i></a>
+                                                    <ul class="ed-options">
+                                                        <li><a href="#" title="">Edit Post</a></li>
+                                                        <li><a href="#" title="">Unsaved</a></li>
+                                                        <li><a href="#" title="">Unbid</a></li>
+                                                        <li><a href="#" title="">Close</a></li>
+                                                        <li><a href="#" title="">Hide</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="epi-sec">
+                                                <!------ul class="descp">
+                                                    <li><img src="/images/icon8.png" alt=""><span>Epic Coder</span></li>
+                                                    <li><img src="/images/icon9.png" alt=""><span>India</span></li>
+                                                </ul>
+                                                <ul class="bk-links">
+                                                    <li><a href="#" title=""><i class="la la-bookmark"></i></a></li>
+                                                    <li><a href="#" title=""><i class="la la-envelope"></i></a></li>
+                                                </ul ----->
+                                            </div>
+                                            <div class="job_descp accountnone">
+                                                <div class="row">
+                                                    <div class="col-11">
+                                                            <% if(post.img) { %>
+                                                                <center><img width="100%" src="/uploads/<%= post.img %>"></img></center>
+                                                            <% } else { %>
+                                                                <p style="white-space: pre-line; margin-bottom: 15px;"><%= post.body %></p>
+                                                            <% } %>
+                                                        <ul class="skill-tags">
+                                                            <li><a href="#" title=""><%= post.category %></a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div style="color:grey; font-size: 25px;" class="pr-0 text-center col-1">
+                                                        <i <% if(post.meta.upvotes.user.includes(user)){ %> style="color: orange" <% } %> id="<%= post.nanoid %>-up" class="upvote-btn fas fa-caret-up"></i>
+                                                        <p id="<%= post.nanoid %>-points" style="margin-bottom: 0"><%= post.meta.points %></p>
+                                                        <i <% if(post.meta.downvotes.user.includes(user)){ %> style="color: orange" <% } %> id="<%= post.nanoid %>-down" class="downvote-btn fas fa-caret-down"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="job-status-bar pt-1" style="margin-bottom: 10px; padding: 15px;">
+												<ul class="like-com">
+													<li>
+														<a href="/<%= post.type + '/' + post.nanoid %>" class="com"><i class="fas fa-comment-alt"></i> <%= post.comments.length %></a>
+													</li>
+													<li>
+														<a href="#" class="copy-btn com" data-clipboard-text="<%= post.body %>"><i class="fas fa-copy"></i> Copy</a>
+													</li>
+													<li class="d-none d-sm-inline-block">
+														<a href="/<%= post.type + '/' + post.nanoid %>" class="com"><i class="fas fa-clock"> </i><%= format(post.date) %></a>
+													</li>
+												</ul> 
+													<div style="float: right; margin-top: 10px;" class="sharebuttons btn-group btn-group-sm showtext inline">
+														<a href="https://twitter.com/intent/tweet?text=<%= post.body %>&url=<%= projectUrl %>/<%= post.type %>/<%= post.nanoid %>" class="btn btn-twitter" target="_blank"><i style="color: white;" class="fa fa-twitter"></i> Tweet</a>
+														<a href="https://www.facebook.com/sharer/sharer.php?u=<%= projectUrl %>/<%= post.type %>/<%= post.nanoid %>" class="btn btn-facebook" target="_blank"><i class="fa fa-facebook"></i> Share</a>
+													</div>
+												
+                                            </div>
+                                        </div>
+                                        <div  style="width: 100%;
+                                        float: left;">
+                                            <div id="comment-area" >
+                                            <% post.comments.forEach(comment => { %>
+                                                <div class="post_topbar">
+                                                    <div class="usy-dt">
+                                                        <div class="usy-name">
+                                                            <h3><%= comment.user %></h3>
+                                                            <span><img src="/images/clock.png" alt=""><%= format(comment.date) %></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="comment-area">
+                                                    <div style="margin-bottom: 15px; margin-left: 18px;">
+                                                        <p><%= comment.body %></p>
+                                                    </div>
+                                                </div>
+                                                <%
+                                                    })
+                                                %>
+                                            </div>
+
+                                            <% if(session.username) { %>
+                                            <div class="postcomment">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="comment-input" placeholder="Post a comment">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a id="comment-submit" onclick="comment('<%= post.nanoid %>', '<%= session.username %>');" style="color: white;">Send</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                        </div>
+                                        </div>
+                                        <!--post-bar end-->
+                                    </div>
+                                    <!--posts-section end-->
+                                </div>
+                                <!--main-ws-sec end-->
+                            </div>
+                            <div class="col-lg-4 pd-right-none no-pd">
+                                <div class="right-sidebar">
+									<!--widget-about end-->
+									<div class="widget widget-jobs">
+										<div class="sd-title">
+											<h3>Trending Jokes</h3>
+										</div>
+										<div class="jobs-list">
+											<% trendingJokes.forEach((joke) => {%>
+											<div class="job-info d-flex">
+												<div style="width: 65%;" class="job-details pr-2">
+													<h3><%= ucfirst(joke.user) %></h3>
+													<p><%= joke.body.length>60 ? joke.body.slice(0,60)+'... ' : joke.body %></p>
+												</div>
+												<div style="width: 35%" class="hr-rate mt-0">
+													<span><%= format(joke.date) %></span>
+													<a href="/jokes/<%= joke.nanoid %>">View <i class="fas fa-arrow-right" style="font-weight: 600; font-size: 12px;"></i></a>
+												</div>
+											</div>
+											<% }) %><!--job-info end-->  
+										</div><!--jobs-list end-->
+									</div><!--widget-jobs end--> 
+									<div class="widget widget-about">
+										<img src="images/wd-logo.png" alt="">
+										<h3>Advertisement</h3>
+										<span>Some sponsored ad</span>
+										<div class="sign_link">
+											<h3><a href="sign-in.html" title="">Sign up</a></h3>
+											<a href="#" title="">Learn More</a>
+										</div>
+									</div><!--widget-jobs end-->
+									<div class="widget widget-jobs">
+										<div class="sd-title">
+											<h3>Trending Memes</h3>
+										</div>
+										<div class="jobs-list">
+											<% trendingMemes.forEach((meme) => {%>
+												<div class="job-info d-flex">
+													<div style="width: 65%;" class="job-details">
+														<h3><%= ucfirst(meme.user) %></h3>
+													<p class=" d-flex flex-column"><%= meme.title %>
+														<a href="/memes/<%= meme.nanoid %>">
+														<img src="/uploads/<%= meme.img %>" height="100px"></img>
+													</a></p>
+												</div>
+												<div style="width: 35%" class="hr-rate mt-0">
+													<span><%= format(meme.date) %></span>
+													<a href="/memes/<%= meme.nanoid %>">View <i class="fas fa-arrow-right" style="font-weight: 600; font-size: 12px;"></i></a>
+												</div>
+											</div>
+											<% }) %><!--job-info end-->  
+										</div><!--jobs-list end-->
+									</div>
+								</div><!--right-sidebar end-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+       
+        <!--post-project-popup end-->
+    </div>
+    <!--theme-layout end-->
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/popper.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.range-min.js"></script>
+    <script type="text/javascript" src="/lib/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/js/script.js"></script>
+    <script type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+
+    <script type="text/javascript">
+        addFiller();
+    </script>
+</body>
+
+</html>

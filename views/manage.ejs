@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Tasteless</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<link rel="stylesheet" type="text/css" href="css/animate.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/line-awesome.css">
+	<link rel="stylesheet" type="text/css" href="css/line-awesome-font-awesome.min.css">
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.min.css">
+	<link rel="stylesheet" type="text/css" href="lib/slick/slick.css">
+	<link rel="stylesheet" type="text/css" href="lib/slick/slick-theme.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/responsive.css">
+</head>
+
+
+<body>	
+
+	<div class="wrapper">	
+
+		<%- include('header.ejs') %>
+
+		<section class="profile-account-setting">
+			<div class="container">
+				<div class="account-tabs-setting">
+					<div class="row">
+						<div class="col-lg-3">
+							<div class="acc-leftbar">
+								<div class="nav nav-tabs" id="nav-tab" role="tablist">
+								    <a class="nav-item nav-link active" id="nav-password-tab" data-toggle="tab" href="#nav-password" role="tab" aria-controls="nav-password" aria-selected="false"><i class="fa fa-lock"></i>Manage Categories</a>
+									<a class="nav-item nav-link" id="nav-notification-tab" data-toggle="tab" href="#nav-notification" role="tab" aria-controls="nav-notification" aria-selected="false"><i class="fa fa-flash"></i>Notifications</a>
+								    <a class="nav-item nav-link" id="security" data-toggle="tab" href="#security-login" role="tab" aria-controls="security-login" aria-selected="false"><i class="fa fa-user-secret"></i>Reported Posts</a>
+								    <a class="nav-item nav-link" id="nav-blockking-tab" data-toggle="tab" href="#blockking" role="tab" aria-controls="blockking" aria-selected="false"><i class="fa fa-cc-diners-club"></i>Blocked Users</a>
+								  </div>
+							</div><!--acc-leftbar end-->
+						</div>
+						<div class="col-lg-9">
+							<div class="tab-content" id="nav-tabContent">
+							
+							  	<div class="tab-pane fade show active" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab">
+							  		<div class="acc-setting">
+                                        <h3>Manage Categories</h3>
+										<div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                              <tr>
+                                                <th scope="col">S.no</th>
+                                                <th scope="col">Category Name</th>
+                                                <th scope="col">Memes</th>
+                                                <th scope="col">Jokes</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <%  
+                                              let i = 1
+                                              category.forEach((cat) => { %>
+                                                <tr>
+                                                    <td><%= i++ %></td>
+                                                    <td><span style="font-style: italic;"><%= cat.name %></span></td>
+                                                    <td><%= (cat.allowed == 'all' || cat.allowed == 'memes') ? 'Yes' : 'No'%></td>
+                                                    <td><%= (cat.allowed == 'all' || cat.allowed == 'jokes') ? 'Yes' : 'No'%></td>
+                                                </tr>
+                                              <% }) %>
+                                              
+                                              
+                                            </tbody>
+                                          </table>
+										</div>
+										<form action="/manage/addcat" method="post">
+											<div class="cp-field">
+												<h5>Add Category</h5>
+												<div class="cpp-fiel form-row">
+													<input class="mb-2" type="text" name="name" placeholder="New Category">
+                                                    <i class="fa fa-lock"></i>
+                                                    <div class="custom-control ">
+                                                        <input type="checkbox" id="memes" name="memes" class="custom-control-input">
+                                                        <label class="custom-control-label mx-2" for="memes">Allow in Memes</label>
+                                                    </div>
+                                                    <div class="custom-control ">
+                                                        <input type="checkbox" id="jokes" name="jokes" class="custom-control-input">
+                                                        <label class="custom-control-label mx-2" for="jokes">Allow in Jokes</label>
+                                                    </div>
+                                                </div>
+                                                
+											</div> 
+											<div class="save-stngs pd2">
+												<ul>
+													<li><button type="submit">Save</button></li>
+												</ul>
+											</div><!--save-stngs end-->
+										</form>
+									</div><!--acc-setting end-->
+							  	</div>
+					 
+							</div>
+						</div>
+					</div>
+				</div><!--account-tabs-setting end-->
+			</div>
+		</section>
+	</div><!--theme-layout end-->
+
+
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/popper.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.mCustomScrollbar.js"></script>
+<script type="text/javascript" src="lib/slick/slick.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+
+
+</body>
+</html>

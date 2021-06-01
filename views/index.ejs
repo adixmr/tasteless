@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title><%= projectName %></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<link rel="stylesheet" type="text/css" href="/css/animate.css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/line-awesome.css">
+	<link rel="stylesheet" type="text/css" href="/css/line-awesome-font-awesome.min.css">
+	<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/jquery.mCustomScrollbar.min.css">
+	<link rel="stylesheet" type="text/css" href="/lib/slick/slick.css">
+	<link rel="stylesheet" type="text/css" href="/lib/slick/slick-theme.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/responsive.css">
+
+	<style>
+		/* SHAREBUTTONS ========================= */
+		
+		.sharebuttons a { color: #fff !important; }
+		.btn-facebook { background: #3b5998;}
+		.btn-twitter { background: #00acee;}
+		.btn-google { background: #dd4b39;}
+		.btn-pinterest { background: #c8232c;}
+		.btn-linkedin { background: #0e76a8;}
+		.btn-facebook:hover { background: #2f4679;}
+		.btn-twitter:hover { background: #0089bd;}
+		.btn-google:hover { background: #b03b2d;}
+		.btn-pinterest:hover { background: #9f1b23;}
+		.btn-linkedin:hover { background: #0b5e85;}
+		
+		/* ====================== end SHAREBUTTONS */
+		
+		</style>
+</head>
+
+<body>	
+
+	<div class="wrapper">	
+		
+		<%- include('header.ejs') %>
+
+		<main>
+			<div class="main-section">
+				<div class="container">
+					<div class="main-section-data">
+						<div class="row">
+							
+							<div class="col-lg-8 col-md-8 no-pd">
+								<div class="main-ws-sec">
+									<div class="post-topbar"> 
+										<% if(session.username){ %>
+										<div class="user-picy mt-3 mb-2">
+											<h2>Got something sick in your mind? Share it with the world!</h2>
+										</div>
+										<div class="post-st">
+											<ul>
+												<li><a class="post_project" href="#" title="">Post a joke</a></li>
+												<li><a class="post-jb" href="#" title="">Post a meme</a></li>
+											</ul>
+										</div><!--post-st end-->
+										<% } else { %>
+											<div class="user-picy mt-3 pb-3" style="width: 100%;">
+												<h2>Got something sick in your mind? Login or Signup to share it with the world!</h2>
+											</div>
+										<% } %>
+									</div><!--post-topbar end-->
+
+
+
+
+
+
+									<!-------------------- posts -------------------->
+
+									<div id="posts-section" class="posts-section"> 
+										<% 
+											posts.forEach(post => {
+										%>
+										<div id="<%= post.nanoid %>-post" class="post-bar">
+											<div class="post_topbar">
+												<div class="col-10 usy-dt">
+													<p class="mb-3 h6">Posted by
+														<span class="font-italic text-info"><a href="/user/<%= post.user.toLowerCase() %>"><%= (post.user) %></a></span> in
+														<span class="font-italic text-info"><a href="/category/<%= post.category.toLowerCase() %>"><%= (post.category) %></a></span>
+														<% if(post.subcategory) { %> <!---- <span class="font-italic text-info"><a href="./sub/<%= post.subcategory.toLowerCase() %>"><%= (post.subcategory) %></a></span> ---> <% } %>
+													</p>
+												</div>
+												<% if(post.user == session.username) { %>
+												<div class="col-2 ed-opts">
+													<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+													<ul class="ed-options">
+														<li><a id="<%= post.nanoid %>-delete" class="delete-post" href="#delete" title="">Delete post</a></li>
+													</ul>
+												</div>
+												<% } %>
+												<!------
+												<div class="col-xs-2 mr-3 ed-opts">
+													<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+													<ul class="ed-options">
+														<li><a href="#" title="">Edit Post</a></li> 
+														<li><a href="#" title="">Unsaved</a></li>
+														<li><a href="#" title="">Unbid</a></li>
+														<li><a href="#" title="">Close</a></li>
+														<li><a href="#" title="">Hide</a></li>
+													</ul>
+												</div>
+												-------->
+											</div>
+
+											<div class="job_descp">
+												<% if(post.title){ %>
+												<h1 style="font-weight: bold; margin-bottom: 10px; font-size: 25px; margin-left: 15px;"><%= post.title %></h1>
+												<% } %>
+												<div class="row">
+													<div class="col-11">
+														<% if(post.img) { %>
+															<center><a href="/<%= post.type + '/' + post.nanoid %>"><img width="100%" src="/uploads/<%= post.img %>"></img></a></center>
+														<% } else { %>
+															<p style="cursor: default; white-space: pre-line" onclick="location.href='/<%= post.type + '/' + post.nanoid %>';"><%= post.body %></p>
+														<% } %>
+													</div>
+													<div style="color:grey; font-size: 25px;" class="pr-0 text-center col-1">
+														<i <% if(post.meta.upvotes.user.includes(session.username)){ %> style="color: orange" <% } %> id="<%= session.username ? post.nanoid : '' %>-up" class="upvote-btn fas fa-caret-up"></i>
+														<p id="<%= post.nanoid %>-points" style="margin-bottom: 0"><%= post.meta.points %></p>
+														<i <% if(post.meta.downvotes.user.includes(session.username)){ %> style="color: orange" <% } %> id="<%= session.username ? post.nanoid : '' %>-down" class="downvote-btn fas fa-caret-down"></i>
+													</div>
+
+												</div>
+
+											</div>
+											<div class="job-status-bar">
+												<ul class="like-com">
+													<li>
+														<a href="/<%= post.type + '/' + post.nanoid %>" class="com"><i class="fas fa-comment-alt"></i> <%= post.comments.length %></a>
+													</li>
+													<li>
+														<a href="#copied" class="copy-btn com" data-clipboard-text="<%= post.body %>"><i class="fas fa-copy"></i> Copy</a>
+													</li>
+													<li class="d-none d-sm-inline-block">
+														<a href="/<%= post.type + '/' + post.nanoid %>" class="com"><i class="fas fa-clock"> </i><%= format(post.date) %></a>
+													</li>
+												</ul> 
+													<div style="float: right; margin-top: 10px;" class="sharebuttons btn-group btn-group-sm showtext inline">
+														<a href="https://twitter.com/intent/tweet?text=<%= post.body %>&url=<%= projectUrl %>/<%= post.type %>/<%= post.nanoid %>" class="btn btn-twitter" target="_blank"><i style="color: white;" class="fa fa-twitter"></i> Tweet</a>
+														<a href="https://www.facebook.com/sharer/sharer.php?u=<%= projectUrl %>/<%= post.type %>/<%= post.nanoid %>" class="btn btn-facebook" target="_blank"><i class="fa fa-facebook"></i> Share</a>
+													</div>
+												
+											</div>
+										</div>
+										<%
+											})
+										%>
+										
+										
+						<!--post-bar end-->
+										<!--post-bar end-->
+										<!--posty end-->
+										
+									</div><!--posts-section end-->
+									<div <%- posts.length < locals.postsLimit ? 'style="display: none;"' : '' %> id="load-spinner" class="process-comm">
+										<div class="spinner">
+											<div class="bounce1"></div>
+											<div class="bounce2"></div>
+											<div class="bounce3"></div>
+										</div>
+									</div><!--process-comm end-->
+								</div><!--main-ws-sec end-->
+							</div>
+							<div class="col-lg-4 pd-right-none no-pd">
+								<div class="right-sidebar">
+									<!--widget-about end-->
+									<div class="widget widget-jobs">
+										<div class="sd-title">
+											<h3>Trending Jokes</h3>
+										</div>
+										<div class="jobs-list">
+											<% trendingJokes.forEach((joke) => {%>
+											<div class="job-info d-flex">
+												<div style="width: 65%;" class="job-details pr-2">
+													<h3><%= ucfirst(joke.user) %></h3>
+													<p><%= joke.body.length>60 ? joke.body.slice(0,60)+'... ' : joke.body %></p>
+												</div>
+												<div style="width: 35%" class="hr-rate mt-0">
+													<span><%= format(joke.date) %></span>
+													<a href="/jokes/<%= joke.nanoid %>">View <i class="fas fa-arrow-right" style="font-weight: 600; font-size: 12px;"></i></a>
+												</div>
+											</div>
+											<% }) %><!--job-info end-->  
+										</div><!--jobs-list end-->
+									</div><!--widget-jobs end--> 
+									<div class="widget widget-about">
+										<img src="images/wd-logo.png" alt="">
+										<h3>Advertisement</h3>
+										<span>Some sponsored ad</span>
+										<div class="sign_link">
+											<h3><a href="sign-in.html" title="">Sign up</a></h3>
+											<a href="#" title="">Learn More</a>
+										</div>
+									</div><!--widget-jobs end-->
+									<div class="widget widget-jobs">
+										<div class="sd-title">
+											<h3>Trending Memes</h3>
+										</div>
+										<div class="jobs-list">
+											<% trendingMemes.forEach((meme) => {%>
+												<div class="job-info d-flex">
+													<div style="width: 65%;" class="job-details">
+														<h3><%= ucfirst(meme.user) %></h3>
+													<p class=" d-flex flex-column"><%= meme.title %>
+														<a href="/memes/<%= meme.nanoid %>">
+														<img src="/uploads/<%= meme.img %>" height="100px"></img>
+													</a></p>
+												</div>
+												<div style="width: 35%" class="hr-rate mt-0">
+													<span><%= format(meme.date) %></span>
+													<a href="/memes/<%= meme.nanoid %>">View <i class="fas fa-arrow-right" style="font-weight: 600; font-size: 12px;"></i></a>
+												</div>
+											</div>
+											<% }) %><!--job-info end-->  
+										</div><!--jobs-list end-->
+									</div>
+								</div><!--right-sidebar end-->
+							</div>
+						</div>
+					</div><!-- main-section-data end-->
+				</div> 
+			</div>
+		</main>
+		
+		
+
+
+
+
+		<div class="post-popup pst-pj">
+			<div class="post-project">
+				<h3>Post a joke</h3>
+				<div class="post-project-fields">
+					<form action="/post/jokes" method="post">
+						<div class="row"> 
+							<div class="col-lg-12">
+								<div class="inp-field">
+									<select name="category">
+										<% category.forEach((cat) => { 
+											if(cat.allowed=='jokes' || cat.allowed=='all') {%>
+											<option><%= cat.name %></option> 
+										<% }}) %>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<textarea name="description" placeholder="Write your joke here"></textarea>
+							</div>
+							<div class="col-lg-12">
+								<ul>
+									<li><button class="active" type="submit" value="post">Post</button></li>
+								</ul>
+							</div>
+						</div>
+					</form>
+				</div><!--post-project-fields end-->
+				<a href="#" title=""><i class="la la-times-circle-o"></i></a>
+			</div><!--post-project end-->
+		</div><!--post-project-popup end-->
+
+		<div class="post-popup job_post">
+			<div class="post-project">
+				<h3>Post a meme</h3>
+				<div class="post-project-fields">
+					<form method="post"  enctype="multipart/form-data"  action="/post/memes">
+						<div class="row">
+							<div class="col-lg-12">
+								<input type="text" name="title" placeholder="Title">
+							</div>
+							
+							<div class="col-lg-12">
+								<div class="inp-field">
+									<select name="category">
+										<% category.forEach((cat) => { 
+											if(cat.allowed=='memes' || cat.allowed=='all') {%>
+											<option><%= cat.name %></option> 
+										<% }}) %>
+									</select>
+								</div>
+							</div>  
+							<div class="col-lg-12">
+								<input style="padding: 0px; font-size: inherit; margin-left: 0px;" name="image" type="file" class="custom-file-input">
+							</input>
+							</div>
+							<div class="col-lg-12">
+								<ul>
+									<li><button class="active" type="submit" value="post">Post</button></li>
+								</ul>
+							</div>
+						</div>
+					</form>
+				</div><!--post-project-fields end-->
+				<a href="#" title=""><i class="la la-times-circle-o"></i></a>
+			</div><!--post-project end-->
+		</div><!--post-project-popup end-->
+
+	</div><!--theme-layout end-->
+
+
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/popper.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/jquery.mCustomScrollbar.js"></script>
+<script type="text/javascript" src="/lib/slick/slick.min.js"></script>
+<script type="text/javascript" src="/js/scrollbar.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/timeago.min.js"></script>
+
+<%- include('loadposts.ejs') %>
+
+</body>
+</html>

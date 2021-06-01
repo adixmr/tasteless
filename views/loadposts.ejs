@@ -1,0 +1,58 @@
+<script type="text/javascript">
+	loadPosts('<%= locals.type ? type : '' %>', '<%= locals.cat ? cat : '' %>', null, <%= locals.postsLimit %>, null, '<%= search %>');
+
+	function newPost(post){
+		let user 		= 	'<%= session.user %>';
+		//let sub 		= 	post.subcategory ? `<span class="font-italic text-info"><a href="./sub/${post.subcategory.toLowerCase()}">${post.subcategory}</a></span>` : ``;
+		let title 		= 	post.title ? `<h1 style="font-weight: bold; margin-bottom: 10px; font-size: 25px; margin-left: 15px;">${post.title}</h1>` : ``;
+		let img 		= 	post.img ? `<center><a href="/${post.type}/${post.nanoid}"><img width="100%" src="/uploads/${post.img}"></img></a></center>` : `<p style="cursor: default; white-space: pre-line" onclick="location.href='/${post.type}/${post.nanoid}';">${post.body}</p>`;
+		let upvote 		= 	post.meta.upvotes.user.includes(<%= session.user %>) ? `style="color: orange"` : ``;
+		let downvote 	= 	post.meta.downvotes.user.includes(<%= session.user %>) ? `style="color: orange"` : ``;
+ 
+		var html = `<div class="post-bar">
+		<div class="post_topbar">
+			<div class="col-10 usy-dt">
+				<p class="mb-3 h6">Posted by
+					<span class="font-italic text-info"><a href="/user/${post.user.toLowerCase()}">${post.user}</a></span> in
+					<span class="font-italic text-info"><a href="/category/${post.category.toLowerCase()}">${post.category}</a></span>
+				</p>
+			</div> 
+		</div>
+
+		<div class="job_descp">
+			${title}
+			<div class="row">
+				<div class="col-11">
+					${img}
+				</div>
+				<div style="color:grey; font-size: 25px;" class="pr-0 text-center col-1">
+					<i ${upvote} id="${post.nanoid}-up" class="upvote-btn fas fa-caret-up"></i>
+					<p id="${post.nanoid}-points" style="margin-bottom: 0">${post.meta.points}</p>
+					<i ${downvote} id="${post.nanoid}-down" class="downvote-btn fas fa-caret-down"></i>
+				</div>
+
+			</div>
+
+		</div>
+		<div class="job-status-bar">
+			<ul class="like-com">
+				<li>
+					<a href="/${post.type}/${post.nanoid}" class="com"><i class="fas fa-comment-alt"></i> ${post.comments.length}</a>
+				</li>
+				<li>
+					<a href="#copied" class="copy-btn com" data-clipboard-text="${post.body}"><i class="fas fa-copy"></i> Copy</a>
+				</li>
+				<li class="d-none d-sm-inline-block">
+					<a href="/${post.type}/${post.nanoid}" class="com"><i datetime="`+ post.date +`" class="needs-tobe-rendered fortimeago fas fa-clock"> </i>`+ timeago.format(post.date) +`</a>
+				</li>
+			</ul> 
+				<div style="float: right; margin-top: 10px;" class="sharebuttons btn-group btn-group-sm showtext inline">
+					<a href="https://twitter.com/intent/tweet?text=${post.body}&url=<%= projectUrl %>/${post.type}/${post.nanoid}" class="btn btn-twitter" target="_blank"><i style="color: white;" class="fa fa-twitter"></i> Tweet</a>
+					<a href="https://www.facebook.com/sharer/sharer.php?u=<%= projectUrl %>/${post.type}/${post.nanoid}" class="btn btn-facebook" target="_blank"><i class="fa fa-facebook"></i> Share</a>
+				</div>
+			
+		</div>
+		</div>`
+		return html;
+		}
+</script>
